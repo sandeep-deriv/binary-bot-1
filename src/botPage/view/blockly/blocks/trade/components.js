@@ -3,6 +3,7 @@ import { fieldGeneratorMapping } from '../shared';
 import { oppositesToDropdown } from '../../utils';
 import config from '../../../../common/const';
 import { translate } from '../../../../../common/i18n';
+import { getCurrentAccount, isLoggedInDeriv } from '../../../../../common/utils/storageManager';
 
 export const marketDropdown = block => {
     block
@@ -71,7 +72,12 @@ export const payout = block => {
             amountInput.appendField(`${translate('Stake')}:`);
         }
 
-        amountInput.appendField(new Blockly.FieldDropdown(config.lists.CURRENCY), 'CURRENCY_LIST');
+        if (isLoggedInDeriv()) {
+            const activeAccount = getCurrentAccount();
+            amountInput.appendField(`${activeAccount.currency || config.lists.CURRENCY[0]}`, 'CURRENCY_LIST');
+        } else {
+            amountInput.appendField(new Blockly.FieldDropdown(config.lists.CURRENCY), 'CURRENCY_LIST');
+        }
     }
 };
 
