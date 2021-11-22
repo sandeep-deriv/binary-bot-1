@@ -103,6 +103,7 @@
     "webpack-stream": "^4.0.0"
   },
   "dependencies": {
+    "@deriv/deriv-api": "^1.0.8",
     "@deriv/deriv-charts": "0.3.16",
     "@reduxjs/toolkit": "^1.6.2",
     "binary-style": "^0.2.4",
