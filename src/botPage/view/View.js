@@ -51,6 +51,8 @@ import Footer from './deriv/layout/Footer';
 import Header from './deriv/layout/Header';
 import Main from './deriv/layout/Main';
 import store from './deriv/store';
+import CollapseBar from './deriv/mobile/CollapseBar';
+import { isMobile } from '../../common/utils/tools';
 
 let realityCheckTimeout;
 let chart;
@@ -807,12 +809,14 @@ function renderReactComponents() {
         </Provider>,
         document.getElementById('main')
     );
-    ReactDOM.render(
-        <Provider store={store}>
-            <Footer api={api} />
-        </Provider>,
-        document.getElementById('footer')
-    );
+    if (!isMobile()) {
+        ReactDOM.render(
+            <Provider store={store}>
+                <Footer api={api} />
+            </Provider>,
+            document.getElementById('footer')
+        );
+    }
     ReactDOM.render(
         <Provider store={store}>
             <TradeInfoPanel api={api} />
@@ -825,4 +829,12 @@ function renderReactComponents() {
         </Provider>,
         document.getElementById('logTable')
     );
+    if (isMobile()) {
+        ReactDOM.render(
+            <Provider store={store}>
+                <CollapseBar api={api} />
+            </Provider>,
+            document.getElementById('collapseBar')
+        );
+    }
 }

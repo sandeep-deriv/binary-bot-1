@@ -6,7 +6,7 @@ import View from './View';
 import { trackjs_config } from './trackJs_config';
 import '../../common/binary-ui/dropdown';
 import GTM from '../../common/gtm';
-import { parseQueryString } from '../../common/utils/tools';
+import { isMobile, parseQueryString } from '../../common/utils/tools';
 import endpoint from '../../indexPage/endpoint';
 import { queryToObjectArray, addTokenIfValid, AppConstants } from '../../common/appId';
 import {
@@ -27,7 +27,9 @@ loginCheck().then(() => {
     const view = new View();
 
     view.initPromise.then(() => {
-        $('.show-on-load').show();
+        if (!isMobile()) {
+            $('.show-on-load').show();
+        }
         $('.barspinner').hide();
         window.dispatchEvent(new Event('resize'));
         GTM.init();

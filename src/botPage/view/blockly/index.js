@@ -27,7 +27,7 @@ import { getLanguage } from '../../../common/lang';
 import { observer as globalObserver } from '../../../common/utils/observer';
 import { showDialog } from '../../bot/tools';
 import GTM from '../../../common/gtm';
-import { parseQueryString, isProduction } from '../../../common/utils/tools';
+import { parseQueryString, isProduction, isMobile } from '../../../common/utils/tools';
 import { TrackJSError } from '../logger';
 import { createDataStore } from '../../bot/data-collection';
 import config from '../../common/const';
@@ -333,6 +333,9 @@ export default class _Blockly {
                     },
                     trashcan: false,
                 });
+                if (isMobile()) {
+                    $('.blocklyToolboxDiv').hide();
+                }
                 workspace.addChangeListener(event => {
                     if (event.type === Blockly.Events.BLOCK_CREATE) {
                         event.ids.forEach(id => {

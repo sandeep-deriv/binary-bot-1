@@ -1,0 +1,12 @@
+#collapseBar {
+  .container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: #fff;
+    border-top: 1px solid #ff0000;
+    height: 4rem;
+  }
+}
