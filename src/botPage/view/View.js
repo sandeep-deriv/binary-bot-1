@@ -601,7 +601,9 @@ export default class View {
                 elStopButton.style.display = 'inline-block';
             });
 
-            showSummary();
+            if (!isMobile()) {
+                showSummary();
+            }
             this.blockly.run(limitations);
         };
 
@@ -638,6 +640,14 @@ export default class View {
         });
 
         $('[aria-describedby="summaryPanel"]').on('click', '#summaryStopButton', () => {
+            $('#stopButton').trigger('click');
+        });
+
+        $('#collapseBar').on('click', '#summaryRunButton', () => {
+            $('#runButton').trigger('click');
+        });
+
+        $('#collapseBar').on('click', '#summaryStopButton', () => {
             $('#stopButton').trigger('click');
         });
 

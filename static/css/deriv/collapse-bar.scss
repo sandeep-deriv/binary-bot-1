@@ -1,12 +1,202 @@
+$mobile-static-circle-diameter: 0.5rem;
+$mobile-dynamic-circle-diameter: 0.8rem;
+
 #collapseBar {
   .container {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 1000;
     background: #fff;
-    border-top: 1px solid #ff0000;
     height: 4rem;
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      border-top: 1px solid #f2f2f2;
+      .bot-action {
+        padding: 0.5rem;
+        button {
+          border-radius: 50%;
+          background-color: #f2f2f2;
+          color: #000000;
+          padding: 0em 0em;
+          width: 40px;
+          height: 40px;
+          font-size: 1.500em;
+        }
+      }
+
+      .bot-status {
+        flex: 1 1;
+        margin: 0 0.5rem;
+        #current-trade-status {
+          .stage {
+            display: inline-block;
+            margin: 0 14.30%;
+            vertical-align: top;
+            max-width: 120px;
+            //- ----------------------------------------------------
+            .circle-wrapper {
+              width: $mobile-static-circle-diameter;
+              height: $mobile-static-circle-diameter;
+              display: inline-block;
+              transform: translate(-50%, 50%);
+              margin-left: 50%;
+
+              .static-circle {
+                width: $mobile-static-circle-diameter;
+                height: $mobile-static-circle-diameter;
+                border-radius: 100%;
+                border: 0.25em solid $disabled-color;
+                display: inline-block;
+                position: relative;
+                background-color: $disabled-color;
+              }
+            }
+
+            .circle-wrapper.active {
+              .static-circle {
+                width: $mobile-static-circle-diameter;
+                height: $mobile-static-circle-diameter;
+                border-radius: 100%;
+                border: 0.15em solid $circle-color;
+                display: inline-block;
+                position: relative;
+                background-color: #FFF;
+                z-index: 2;
+              }
+
+              .dynamic-circle {
+                position: absolute;
+                width: $mobile-dynamic-circle-diameter;
+                height: $mobile-dynamic-circle-diameter;
+                background-color: $circle-color;
+                border-radius: 100%;
+                opacity: 0.32;
+                animation: animate-circle 0.8s infinite;
+                transform: translate(-50%, -50%);
+                margin-top: 50%;
+                margin-left: -50%;
+                animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+                z-index: 1;
+                top: 7px;
+              }
+            }
+
+            .circle-wrapper.complete {
+              .static-circle {
+                width: $mobile-static-circle-diameter;
+                height: $mobile-static-circle-diameter;
+                border-radius: 100%;
+                border: 0.15em solid $circle-color;
+                display: inline-block;
+                position: relative;
+                background-color: #FFF;
+                z-index: 2;
+              }
+            }
+
+            .line {
+              position: absolute;
+              display: inline-block;
+              top: 9px;
+              width: 2600%;
+              height: 0.25em;
+              background-color: $disabled-color;
+            }
+
+            .line.active {
+              .progress-bar {
+                float: left;
+                box-shadow: none;
+                height: 100%;
+                background-color: $circle-color;
+                display: inline-block;
+                animation: animate-progress 0.5s 1;
+                animation-fill-mode: forwards;
+              }
+            }
+
+            .line.complete {
+              .progress-bar {
+                box-shadow: none;
+                height: 100%;
+                background-color: $circle-color;
+                display: inline-block;
+                animation: animate-progress-complete 0.5s 1;
+                animation-fill-mode: forwards;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#collapse-wrapper {
+  .collapse-trigger {
+    .content-inner {
+      overflow: hidden;
+      transition: ease-in-out 0.4s max-height;
+      max-height: 100vh;
+      position: fixed;
+      bottom: 4rem;
+      left: 0px;
+      width: 100%;
+      height: calc(100vh - 6.5rem);
+      background-color: #ffffff;
+    }
+  }
+}
+
+.toggler {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2f2f2;
+  height: 36px;
+}
+
+.content-wrapper {
+  overflow-y: auto;
+}
+
+.bot-indicator {
+  text-align: center;
+  font-size: 12px;
+  color: #767676;
+}
+
+.summary {
+  &__tabs {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--general-section-1);
+  }
+  &__tab_heading {
+    border-bottom: 2px solid #ffffff;
+    line-height: 2.2rem;
+    flex: 1 1;
+    text-align: center;
+    span {
+      color: var(--text-general);
+      padding: 0 !important;
+      width: 100%;
+      font-size: 0.86957rem;
+      font-weight: normal;
+      white-space: nowrap;
+    }
+    &.active {
+      border-bottom: solid 2px var(--brand-red-coral) !important;
+      cursor: default;
+      span {
+        font-weight: 700;
+        color: var(--text-prominent);
+      }
+    }
   }
 }

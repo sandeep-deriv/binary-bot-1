@@ -27,9 +27,7 @@ loginCheck().then(() => {
     const view = new View();
 
     view.initPromise.then(() => {
-        if (!isMobile()) {
-            $('.show-on-load').show();
-        }
+        $('.show-on-load').show();
         $('.barspinner').hide();
         window.dispatchEvent(new Event('resize'));
         GTM.init();
