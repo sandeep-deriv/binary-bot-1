@@ -131,7 +131,7 @@ const Header = React.memo(() => {
   }
 
   return (
-    <div className="header">
+    <div className="header" style={{ background: 'red' }}>
       <div id="deriv__header" className="header__menu-items">
         {isDesktop() && (
           <div className="header__menu-left">
