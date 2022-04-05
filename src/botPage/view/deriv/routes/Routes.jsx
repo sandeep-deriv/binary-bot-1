@@ -6,15 +6,14 @@ import NotFound from '../layout/NotFound';
 import RouteWrapper from './RouteWrapper.jsx';
 
 const Routes = () => {
-  
   const basename = [
     process.env.PROJECT_NAME || '',
     process.env.BRANCH || ''
   ].join('/') || '/';
 
-  console.log(basename, 'basename basename basename basename basename basename')
-
   return (
+    <>
+    <marquee>Testing test link 1 with '/' in the branch name</marquee>
     <BrowserRouter basename={basename}>
       <Switch>
         <RouteWrapper exact path="/" component={Main} />
@@ -23,6 +22,7 @@ const Routes = () => {
         <Route path="*" component={NotFound} />
       </Switch>
     </BrowserRouter>
+    </>
   )
 }
 
