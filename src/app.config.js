@@ -4,8 +4,8 @@ import { generateDerivLink, getRelatedDeriveOrigin } from "./botPage/view/deriv/
 const related_deriv_origin = getRelatedDeriveOrigin();
 
 export default {
-  app_title: 'Binary Bot',
-  app_logo: 'image/deriv/brand/ic-brand-binarybot.svg',
+  app_title: 'P Bot',
+  app_logo: 'image/deriv/brand/plogo.svg',
   supported_languages: {
     en: 'English',
     // fr: 'Français',
@@ -123,28 +123,28 @@ export default {
   },
   platforms: [
     {
-      title: 'DTrader',
+      title: 'PTrader',
       description: translate('A whole new trading experience on a powerful yet easy to use platform.'),
       link: related_deriv_origin.origin,
-      logo: 'image/deriv/brand/ic-brand-dtrader.svg',
+      logo: 'image/deriv/brand/plogo.svg',
     },
     {
-      title: 'DBot',
+      title: 'PBot',
       description: translate('Automated trading at your fingertips. No coding needed.'),
       link: `${related_deriv_origin.origin}/bot`,
       logo: 'image/deriv/brand/ic-brand-dbot.svg',
     },
     {
       title: 'DMT5',
-      description: translate('Trade on Deriv MetaTrader 5 (DMT5), the all-in-one FX and CFD trading platform.'),
+      description: translate('Trade on P MetaTrader 5 (DMT5), the all-in-one FX and CFD trading platform.'),
       link: `${related_deriv_origin.origin}/mt5`,
       logo: 'image/deriv/brand/ic-brand-dmt5.svg',
     },
     {
-      title: 'Deriv X',
+      title: 'P X',
       description: translate('Trade FX and CFDs on a customisable, easy-to-use trading platform.'),
       link: `${related_deriv_origin.origin}/derivx`,
-      logo: 'image/deriv/brand/ic-brand-dxtrade.svg',
+      logo: 'image/deriv/brand/plogo.svg',
     },
     {
       title: 'SmartTrader',
@@ -153,12 +153,12 @@ export default {
       logo: 'image/deriv/brand/ic-brand-smarttrader.svg',
     },
     {
-      title: 'Binary Bot',
+      title: 'P Bot',
       description: translate(
         'Our classic “drag-and-drop” tool for creating trading bots, featuring pop-up trading charts, for advanced users.'
       ),
       link: '/',
-      logo: 'image/deriv/brand/ic-brand-binarybot.svg',
+      logo: 'image/deriv/brand/plogo.svg',
     },
   ],
   help_center: {
@@ -167,7 +167,7 @@ export default {
   },
   add_account: {
     visible: true,
-    label: translate("Add Deriv account"),
+    label: translate("Add account"),
     url: generateDerivLink("redirect", "action=add_account"),
   },
 } 
