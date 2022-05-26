@@ -135,12 +135,6 @@ export default {
       logo: 'image/deriv/brand/ic-brand-dbot.svg',
     },
     {
-      title: 'DMT5',
-      description: translate('Trade on P MetaTrader 5 (DMT5), the all-in-one FX and CFD trading platform.'),
-      link: `${related_deriv_origin.origin}/mt5`,
-      logo: 'image/deriv/brand/ic-brand-dmt5.svg',
-    },
-    {
       title: 'P X',
       description: translate('Trade FX and CFDs on a customisable, easy-to-use trading platform.'),
       link: `${related_deriv_origin.origin}/derivx`,
