@@ -141,12 +141,6 @@ export default {
       logo: 'image/deriv/brand/plogo.svg',
     },
     {
-      title: 'SmartTrader',
-      description: translate('Trade the world\'s markets with our popular user-friendly platform.'),
-      link: `https://${related_deriv_origin.prefix}smarttrader.deriv.${related_deriv_origin.extension}/`,
-      logo: 'image/deriv/brand/ic-brand-smarttrader.svg',
-    },
-    {
       title: 'P Bot',
       description: translate(
         'Our classic “drag-and-drop” tool for creating trading bots, featuring pop-up trading charts, for advanced users.'
