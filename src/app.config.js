@@ -1,5 +1,6 @@
 import { translate } from "./common/utils/tools";
 import { generateDerivLink, getRelatedDeriveOrigin } from "./botPage/view/deriv/utils";
+import { getOAuthURL } from "./common/appId";
 
 const related_deriv_origin = getRelatedDeriveOrigin();
 
@@ -149,13 +150,44 @@ export default {
       logo: 'image/deriv/brand/plogo.svg',
     },
   ],
-  help_center: {
-    visible: true,
-    url: `https://deriv.${related_deriv_origin.extension}/help-centre`,
-  },
   add_account: {
     visible: true,
     label: translate("Add account"),
     url: generateDerivLink("redirect", "action=add_account"),
   },
-} 
+  help_center: {
+    visible: true,
+    url: `https://deriv.${related_deriv_origin.extension}/help-centre`,
+  },
+  trading_view_chart: {
+    visible: true,
+    // URL to the chart
+    url: 'https://tradingview.binary.com/',
+    label: translate('Trading View'),
+  },
+  login: {
+    // URL to the common login OAuth page
+    url: getOAuthURL(),
+    label: translate("Log in"),
+  },
+  signup: {
+    // URL to the common signup page
+    url: `https://deriv.${related_deriv_origin.extension}/signup/`,
+    label: translate("Sign up"),
+  },
+  reports: {
+    visible: true,
+    url: generateDerivLink("reports/positions"),
+    label: translate("Reports"),
+  },
+  cashier: {
+    visible: true,
+    url: generateDerivLink("cashier/deposit"),
+    label: translate("Cashier"),
+  },
+  deposit: {
+    visible: true,
+    url: `${related_deriv_origin.origin}/cashier/deposit`,
+    label: translate("Deposit"),
+  }
+}
