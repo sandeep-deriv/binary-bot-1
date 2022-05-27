@@ -189,5 +189,5 @@ export default {
     visible: true,
     url: `${related_deriv_origin.origin}/cashier/deposit`,
     label: translate("Deposit"),
-  }
+  },
 }
