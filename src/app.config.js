@@ -133,7 +133,7 @@ export default {
       title: 'PBot',
       description: translate('Automated trading at your fingertips. No coding needed.'),
       link: `${related_deriv_origin.origin}/bot`,
-      logo: 'image/deriv/brand/ic-brand-dbot.svg',
+      logo: 'image/deriv/brand/plogo.svg',
     },
     {
       title: 'P X',
