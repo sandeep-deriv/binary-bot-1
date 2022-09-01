@@ -70,7 +70,6 @@ export default Engine =>
                     } else {
                         this.clearProposals();
                     }
-
                     const unsubscribe = this.store.subscribe(() => {
                         const { scope, proposalsReady } = this.store.getState();
                         if (scope === BEFORE_PURCHASE && proposalsReady) {
