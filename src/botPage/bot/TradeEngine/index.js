@@ -16,6 +16,7 @@ import rootReducer from './state/reducers';
 import * as constants from './state/constants';
 import { start } from './state/actions';
 import { observer as globalObserver } from '../../../common/utils/observer';
+import { api_base } from '../../../apiBase';
 
 const watchBefore = store =>
     watchScope({
@@ -65,7 +66,6 @@ const watchScope = ({ store, stopScope, passScope, passFlag }) => {
 export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Proposal(Ticks(Total(class {}))))))) {
     constructor($scope) {
         super();
-        this.api = $scope.api;
         this.observer = $scope.observer;
         this.$scope = $scope;
         this.observe();
@@ -104,9 +104,9 @@ export default class TradeEngine extends Balance(Purchase(Sell(OpenContract(Prop
 
     loginAndGetBalance(token) {
         if (this.token === token) return Promise.resolve();
-        doUntilDone(() => this.api.authorize(token)).catch(e => this.$scope.observer.emit('Error', e));
+        doUntilDone(() => api_base.api.authorize(token)).catch(e => this.$scope.observer.emit('Error', e));
         return new Promise(resolve =>
-            this.api.expectResponse('authorize').then(({ authorize }) => {
+            api_base.api.expectResponse('authorize').then(({ authorize }) => {
                 this.accountInfo = authorize;
                 this.token = token;
                 resolve();

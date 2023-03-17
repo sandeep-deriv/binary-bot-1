@@ -1,4 +1,5 @@
 import { Map } from 'immutable';
+import { api_base } from '../../apiBase';
 import { historyToTicks, getLast } from '../../common/utils/binary';
 import { observer as globalObserver } from '../../common/utils/observer';
 import { doUntilDone, getUUID } from '../bot/tools';
@@ -40,8 +41,7 @@ const updateCandles = (candles, ohlc) => {
 const getType = isCandle => (isCandle ? 'candles' : 'ticks');
 
 export default class TicksService {
-    constructor(api) {
-        this.api = api;
+    constructor() {
         this.ticks = new Map();
         this.candles = new Map();
         this.tickListeners = new Map();
@@ -77,7 +77,7 @@ export default class TicksService {
     getActiveSymbols = () =>
         new Promise(resolve => {
             const getSymbols = () => {
-                this.api
+                api_base.api
                     .send({ active_symbols: 'brief' })
                     .then(({ active_symbols }) =>
                         // eslint-disable-next-line camelcase
@@ -89,7 +89,7 @@ export default class TicksService {
             };
 
             if (isLoggedIn()) {
-                this.api.expectResponse('authorize').then(() => {
+                api_base.api.expectResponse('authorize').then(() => {
                     getSymbols();
                 });
             } else {
@@ -177,7 +177,7 @@ export default class TicksService {
             ...(tickSubscription || []),
         ];
 
-        Promise.all(subscription.map(id => doUntilDone(() => this.api.forget(id))));
+        Promise.all(subscription.map(id => doUntilDone(() => api_base.api.forget(id))));
 
         this.subscriptions = new Map();
     }
@@ -206,7 +206,7 @@ export default class TicksService {
         }
     }
     observe() {
-        this.api.onMessage().subscribe(({ data }) => {
+        api_base.api.onMessage().subscribe(({ data }) => {
             if (data?.error?.code) {
                 return;
             }
@@ -277,7 +277,7 @@ export default class TicksService {
         };
 
         return new Promise((resolve, reject) => {
-            doUntilDone(() => this.api.send(request_object))
+            doUntilDone(() => api_base.api.send(request_object))
                 .then(r => {
                     if (style === 'ticks') {
                         const ticks = historyToTicks(r.history);
@@ -300,7 +300,7 @@ export default class TicksService {
 
     forget = subscription_id => {
         if (subscription_id) {
-            this.api.forget(subscription_id);
+            api_base.api.forget(subscription_id);
         }
     };
 

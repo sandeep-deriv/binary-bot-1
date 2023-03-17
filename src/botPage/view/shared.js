@@ -3,9 +3,9 @@ import { AppConstants } from '../../common/appId';
 import _Symbol from '../common/symbolApi';
 import TicksService from '../common/TicksService';
 import { get as getStorage } from '../../common/utils/storageManager';
-import api from './deriv/api';
+import { api_base } from '../../apiBase';
 
-export const symbolApi = new _Symbol(api);
+export const symbolApi = new _Symbol(api_base.api);
 
 export const symbolPromise = new Promise(resolve => {
     symbolApi.initPromise.then(() => {
@@ -13,7 +13,7 @@ export const symbolPromise = new Promise(resolve => {
     });
 });
 
-export const ticksService = new TicksService(api);
+export const ticksService = new TicksService(api_base.api);
 
 export const appendRow = (trade, state, isDesc = false) => ({
     id: state.id + 1,
