@@ -5,7 +5,7 @@ import TicksService from './TicksService';
 
 export default class ChartTicksService extends TicksService {
     observe() {
-        api_base.api.onMessage().subscribe(({ data }) => {
+        const subscription = api_base.api.onMessage().subscribe(({ data }) => {
             if (data?.error?.code) {
                 return;
             }
@@ -31,6 +31,7 @@ export default class ChartTicksService extends TicksService {
                 }
             }
         });
+        api_base.pushSubscription(subscription);
     }
 
     requestTicks(options) {

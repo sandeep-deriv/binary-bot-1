@@ -50,8 +50,9 @@ export default class TicksService {
         this.ticks_history_promise = null;
         this.candles_promise = null;
         this.active_symbols_promise = null;
-        this.observe();
+        // this.observe();
     }
+
     requestPipSizes() {
         if (this.pipSizes) {
             return Promise.resolve(this.pipSizes);
@@ -206,7 +207,8 @@ export default class TicksService {
         }
     }
     observe() {
-        api_base.api.onMessage().subscribe(({ data }) => {
+        console.log('observe    is being called');
+        const subscription = api_base.api.onMessage().subscribe(({ data }) => {
             if (data?.error?.code) {
                 return;
             }
@@ -236,6 +238,7 @@ export default class TicksService {
                 }
             }
         });
+        api_base.pushSubscription(subscription);
     }
     requestStream(options) {
         const { style } = options;

@@ -1,4 +1,5 @@
 import DerivAPIBasic from '@deriv/deriv-api/dist/DerivAPIBasic';
+import { doUntilDone } from '../botPage/bot/tools';
 import AppIdMap from '../common/appIdResolver';
 import { supportedLanguages } from '../common/i18n';
 import { setCookieLanguage } from '../common/utils/cookieManager';
@@ -83,6 +84,10 @@ const generateWS = () => {
     });
 }
 
+export const getLoginId = () => {
+    
+}
+
 class APIBase {
     api;
     token;
@@ -94,12 +99,11 @@ class APIBase {
     subscriptions = [];
     time_interval = null;
     has_activeSymbols = false;
-    constructor() {
-        this.init();
-    }
+    symbol_api = null;
 
     init(force_update = false) {
-        if (getLoginId()) {
+        if (getStorage('activeToken')) {
+            console.log(getStorage('activeToken'));
             // this.toggleRunButton(true);
             if (force_update) this.terminate();
             this.api = generateWS();
@@ -141,7 +145,8 @@ class APIBase {
     };
 
     authorizeAndSubscribe() {
-        const { token, account_id } = getToken();
+        const token = getStorage('activeToken');
+        const account_id = getStorage('active_loginid');
         if (token) {
             this.token = token;
             this.account_id = account_id;
@@ -211,6 +216,10 @@ class APIBase {
                 this.api.send({ time: 1 });
             }, 30000);
         }
+    }
+
+    setSymbolAPI(symbol_api) {
+        this.symbol_api = symbol_api;
     }
 }
 

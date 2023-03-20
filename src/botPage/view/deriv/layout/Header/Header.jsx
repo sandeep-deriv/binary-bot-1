@@ -20,9 +20,9 @@ import {
 import { setAccountSwitcherLoader, updateShowMessagePage } from '../../store/ui-slice';
 import { DrawerMenu, AuthButtons, AccountActions, MenuLinks, AccountSwitcherLoader } from './components';
 import { queryToObjectArray } from '../../../../../common/appId';
-import api from '../../api';
 import config from '../../../../../app.config';
 import { observer as globalObserver } from '../../../../../common/utils/observer';
+import { api_base } from '../../../../../apiBase';
 
 const AccountSwitcher = () => {
     const { account_switcher_loader } = useSelector(state => state.ui);
@@ -61,7 +61,7 @@ const Header = () => {
     const hideDropdown = e => !platformDropdownRef.current.contains(e.target) && setIsPlatformSwitcherOpen(false);
 
     React.useEffect(() => {
-        api.onMessage().subscribe(({ data }) => {
+        api_base.api.onMessage().subscribe(({ data }) => {
             if (data?.error?.code) return;
             if (data?.msg_type === 'balance') {
                 dispatch(updateBalance(data.balance));
@@ -81,7 +81,7 @@ const Header = () => {
             dispatch(setAccountSwitcherLoader(false));
         }
         if (active_storage_token) {
-            api.authorize(active_storage_token.token)
+            api_base.api.authorize(active_storage_token.token)
                 .then(account => {
                     const active_loginid = account.authorize.loginid;
                     setStorage('active_loginid', active_loginid);
@@ -91,7 +91,7 @@ const Header = () => {
                     dispatch(updateActiveAccount(account.authorize));
                     dispatch(setAccountSwitcherLoader(false));
                     if (!globalObserver.getState('is_subscribed_to_balance')) {
-                        api.send({
+                        api_base.api.send({
                             balance: 1,
                             account: 'all',
                             subscribe: 1,

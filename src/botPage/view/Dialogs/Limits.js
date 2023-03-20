@@ -6,6 +6,7 @@ import { restrictInputCharacter } from '../shared';
 import * as style from '../style';
 import { getToken } from '../../../common/utils/storageManager';
 import { showSpinnerInButton, removeSpinnerInButton, createUrl, translate } from '../../../common/utils/tools';
+import { api_base } from '../../../apiBase';
 
 class LimitsContent extends PureComponent {
     constructor() {
@@ -52,13 +53,12 @@ class LimitsContent extends PureComponent {
 
     updateMaxLosses() {
         return new Promise((resolve, reject) => {
-            const { api } = this.props;
             const $startButton = $('#submit-trade-limits');
             const initialText = $startButton.text();
 
             showSpinnerInButton($startButton);
 
-            api.getSelfExclusion()
+            api_base.api.getSelfExclusion()
                 .then(response => {
                     const { max_losses: maxLosses } = response.get_self_exclusion;
                     let callback;
@@ -185,7 +185,7 @@ class LimitsContent extends PureComponent {
 }
 
 export default class Limits extends Dialog {
-    constructor(api) {
+    constructor() {
         const onSave = limits => {
             this.limitsPromise(limits);
             this.close();
@@ -193,7 +193,7 @@ export default class Limits extends Dialog {
         super(
             'limits-dialog',
             translate('Trade Limitations'),
-            <LimitsContent onSave={onSave} api={api} />,
+            <LimitsContent onSave={onSave} />,
             style.dialogLayout
         );
         this.registerCloseOnOtherDialog();

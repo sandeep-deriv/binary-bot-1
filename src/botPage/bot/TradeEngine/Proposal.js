@@ -93,7 +93,7 @@ export default Engine =>
         }
 
         observeProposals() {
-            api_base.api.onMessage().subscribe(({ data }) => {
+            const subscription = api_base.api.onMessage().subscribe(({ data }) => {
                 if (data?.error?.code) {
                     return;
                 }
@@ -109,6 +109,7 @@ export default Engine =>
                     }
                 }
             });
+            api_base.pushSubscription(subscription);
         }
 
         unsubscribeProposals() {

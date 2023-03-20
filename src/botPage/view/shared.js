@@ -1,19 +1,9 @@
 import filesaver from 'file-saver';
 import { AppConstants } from '../../common/appId';
-import _Symbol from '../common/symbolApi';
 import TicksService from '../common/TicksService';
 import { get as getStorage } from '../../common/utils/storageManager';
-import { api_base } from '../../apiBase';
 
-export const symbolApi = new _Symbol(api_base.api);
-
-export const symbolPromise = new Promise(resolve => {
-    symbolApi.initPromise.then(() => {
-        resolve();
-    });
-});
-
-export const ticksService = new TicksService(api_base.api);
+export const ticksService = new TicksService();
 
 export const appendRow = (trade, state, isDesc = false) => ({
     id: state.id + 1,

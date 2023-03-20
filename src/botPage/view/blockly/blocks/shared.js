@@ -1,6 +1,5 @@
 import { TrackJS } from 'trackjs';
 import { oppositesToDropdown } from '../utils';
-import { symbolApi } from '../../shared';
 import config from '../../../common/const';
 import { translate } from '../../../../common/i18n';
 import {
@@ -11,7 +10,7 @@ import {
 } from '../../../../common/utils/storageManager';
 import { observer as globalObserver } from '../../../../common/utils/observer';
 import { isProduction } from '../../../../common/utils/tools';
-import api from '../../deriv/api';
+import { api_base } from '../../../../apiBase';
 
 let purchaseChoices = [[translate('Click to select'), '']];
 
@@ -68,7 +67,8 @@ export const fieldGeneratorMapping = {};
 const getActiveSymbols = symbols =>
     Object.keys(symbols).reduce(
         (acc, symbol) =>
-            symbolApi.getAllowedCategories(symbol).length ? { ...acc, [symbol]: symbols[symbol] } : { ...acc },
+            // eslint-disable-next-line max-len
+            api_base.symbol_api.getAllowedCategories(symbol).length ? { ...acc, [symbol]: symbols[symbol] } : { ...acc },
         {}
     );
 
@@ -91,7 +91,7 @@ const getActiveMarket = markets =>
     );
 
 fieldGeneratorMapping.MARKET_LIST = () => {
-    const markets = getActiveMarket(symbolApi.activeSymbols.getMarkets());
+    const markets = getActiveMarket(api_base.symbol_api.activeSymbols.getMarkets());
 
     if (Object.keys(markets).length === 0) {
         return [[translate('Not available'), 'na']];
@@ -100,7 +100,7 @@ fieldGeneratorMapping.MARKET_LIST = () => {
 };
 
 fieldGeneratorMapping.SUBMARKET_LIST = block => () => {
-    const markets = getActiveMarket(symbolApi.activeSymbols.getMarkets());
+    const markets = getActiveMarket(api_base.symbol_api.activeSymbols.getMarkets());
     const marketName = block.getFieldValue('MARKET_LIST');
     const submarketOptions = [];
 
@@ -127,7 +127,7 @@ fieldGeneratorMapping.SUBMARKET_LIST = block => () => {
 };
 
 fieldGeneratorMapping.SYMBOL_LIST = block => () => {
-    const markets = getActiveMarket(symbolApi.activeSymbols.getMarkets());
+    const markets = getActiveMarket(api_base.symbol_api.activeSymbols.getMarkets());
     const submarketName = block.getFieldValue('SUBMARKET_LIST');
     const symbolOptions = [];
 
@@ -165,7 +165,7 @@ fieldGeneratorMapping.TRADETYPECAT_LIST = block => () => {
         return [[translate('Not available'), 'na']];
     }
 
-    const allowedCategories = symbolApi.getAllowedCategories(symbol.toLowerCase());
+    const allowedCategories = api_base.symbol_api.getAllowedCategories(symbol.toLowerCase());
     return Object.keys(config.conditionsCategoryName)
         .filter(e => allowedCategories.indexOf(e) >= 0)
         .map(e => [config.conditionsCategoryName[e], e]);
@@ -312,7 +312,7 @@ export const getContractsAvailableForSymbolFromApi = async underlyingSymbol => {
     let tokenList = getTokenList();
     if (tokenList.length) {
         try {
-            await api.authorize(tokenList[0].token);
+            await api_base.api.authorize(tokenList[0].token);
         } catch (e) {
             removeAllTokens();
             tokenList = [];
@@ -320,7 +320,7 @@ export const getContractsAvailableForSymbolFromApi = async underlyingSymbol => {
     }
     const contractsForSymbol = {};
     try {
-        const response = await api.send({ contracts_for: underlyingSymbol });
+        const response = await api_base.api.send({ contracts_for: underlyingSymbol });
         if (response.contracts_for) {
             Object.assign(contractsForSymbol, {
                 symbol: underlyingSymbol,

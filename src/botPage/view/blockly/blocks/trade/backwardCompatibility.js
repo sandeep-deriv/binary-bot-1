@@ -1,14 +1,14 @@
 import { translate } from '../../../../../common/i18n';
 import config from '../../../../common/const';
-import { symbolApi } from '../../../shared';
 import { setInputList, marketDefPlaceHolders, marketToTradeOption } from './tools';
 import { duration, payout, prediction, barrierOffsetGenerator } from './components';
+import { api_base } from '../../../../../apiBase';
 
 const isBlockCreationEvent = (ev, block) => ev.type === Blockly.Events.CREATE && ev.ids.indexOf(block.id) >= 0;
 
 export default () => {
     // Backward Compatibility Separate market blocks into one
-    const symbols = symbolApi.activeSymbols.getSymbols();
+    const symbols = api_base.symbol_api.activeSymbols.getSymbols();
 
     Object.keys(symbols).forEach(k => {
         Blockly.Blocks[k] = {

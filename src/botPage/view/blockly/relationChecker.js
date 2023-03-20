@@ -2,9 +2,9 @@
 import { observer as globalObserver } from '../../../common/utils/observer';
 import { durationToSecond } from '../../../common/utils/tools';
 import config from '../../common/const';
-import { symbolApi } from '../shared';
 import { translate } from '../../../common/i18n';
 import { findTopParentBlock, disable, enable, expandDuration } from './utils';
+import { api_base } from '../../../apiBase';
 
 const isInRange = (amount, min, max) => !Number.isNaN(+amount) && +amount >= min && +amount <= max;
 
@@ -47,7 +47,7 @@ const conditionFields = (blockObj, ev) => {
 
         if (duration) {
             duration = +duration;
-            const { minDuration } = symbolApi.getLimitation(symbol, tradeType);
+            const { minDuration } = api_base.symbol_api.getLimitation(symbol, tradeType);
             const durationInSeconds = durationToSecond(duration + durationType);
             if (!durationInSeconds) {
                 globalObserver.emit('ui.log.warn', translate('Duration must be a positive integer'));
