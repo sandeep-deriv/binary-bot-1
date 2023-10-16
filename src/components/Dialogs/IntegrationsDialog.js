@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from '@i18n';
+import GoogleDriveIntegration from '@components/GoogleDriveIntegration';
 import Dialog from './Dialog';
-import GoogleDriveIntegration from '../../botPage/view/react-components/Integrations/GoogleDriveIntegration';
 import * as style from '../style';
 
 const IntegrationsContent = () => (

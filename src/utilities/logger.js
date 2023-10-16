@@ -6,6 +6,7 @@ import { trackJSTrack } from '@utilities/integrations/trackJSTrack';
 import { isIOS } from './osDetect';
 
 const log = (type, ...args) => {
+    console.trace();
     if (type === 'warn') {
         console.warn(...args); // eslint-disable-line no-console
     } else {
@@ -47,13 +48,11 @@ const notifyError = error => {
 };
 
 const waitForNotifications = () => {
-    const notifList = ['success', 'info', 'warn', 'error'];
-
+    const notify_types = ['success', 'info', 'warn', 'error'];
     globalObserver.register('Notify', notify);
-
     globalObserver.register('Error', notifyError);
 
-    notifList.forEach(className =>
+    notify_types.forEach(className =>
         globalObserver.register(`ui.log.${className}`, message =>
             notify({ className, message, position: isMobile() ? 'left' : 'right' })
         )

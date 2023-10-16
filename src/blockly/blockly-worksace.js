@@ -1,15 +1,9 @@
-import { api_base } from '@api-base';
 import { getActiveLoginId, getClientAccounts, syncWithDerivApp, removeAllTokens } from '@storage';
 import { translate } from '@i18n';
+import config, { updateConfigCurrencies } from '@currency-config';
 import { observer as globalObserver } from '@utilities/observer';
 import google_drive_util from '@utilities/integrations/GoogleDrive';
-import IntegrationsDialog from '@components/Dialogs/IntegrationsDialog';
-import Chart from '@components/Dialogs/Chart';
-import TradingView from '@components/Dialogs/TradingView';
-import Limits from '@components/Dialogs/Limits';
-import config, { updateConfigCurrencies } from '@currency-config';
 import GTM from '@utilities/integrations/gtm';
-import logHandler from '@utilities/logger';
 import { logoutAllTokens } from '../common/appId';
 import {
     saveBeforeUnload,
@@ -18,10 +12,7 @@ import {
     getUnattachedMandatoryPairs,
 } from './utils';
 import { load } from '.';
-
-const integrationsDialog = new IntegrationsDialog();
-const tradingView = new TradingView();
-let chart;
+import Limits from '../components/Dialogs/Limits';
 
 const checkForRequiredBlocks = () => {
     const displayError = errorMessage => {
@@ -208,20 +199,6 @@ const addBindings = blockly => {
             classes: { 'ui-dialog-titlebar-close': 'icon-close' },
         });
 
-    $('#integrations').click(() => integrationsDialog.open());
-
-    $('#chartButton').click(() => {
-        if (!chart) {
-            chart = new Chart(api_base.api);
-        }
-
-        chart.open();
-    });
-
-    $('#tradingViewButton').click(() => {
-        tradingView.open();
-    });
-
     globalObserver.register('ui.logout', () => {
         saveBeforeUnload();
         $('.barspinner').show();
@@ -365,7 +342,6 @@ const addEventHandlers = blockly => {
 const initialize = blockly =>
     new Promise(resolve => {
         updateConfigCurrencies().then(() => {
-            logHandler();
             applyToolboxPermissions();
             setElementActions(blockly);
             resolve();
